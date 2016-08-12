@@ -51,16 +51,16 @@ import continuum_automation.cucumber.testRunner.TestRunner;
 	    @Override
 	    public void afterInvocation(IInvokedMethod method, ITestResult result) {
 	    //	String scenarioName=Hooks.getScenario().getName();
+	    	String testMethodName = result.getInstanceName().toString().trim();
+			String executionTime=String.valueOf(result.getStartMillis()-result.getEndMillis());
+		
+			String screenShotName = testMethodName + ".jpg";
 	    	if(result.isSuccess())
 	    		{Reporter.log("*****  " + result.getName() + " test has Passed *****");}
 	    	else 
 	    	{
 	    			
-	    		String testMethodName = result.getName().toString().trim();
-	    			
-	    			//Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-	    		//	String date=new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss").format(new Date());
-	    			String screenShotName = testMethodName + ".jpg";
+	    		
 	    			takeScreenShot(screenShotName, testMethodName);
 	    	}
 	    	        if (method.isTestMethod()) {
@@ -99,10 +99,9 @@ import continuum_automation.cucumber.testRunner.TestRunner;
 		            	
 		            	if(dbFlag.equalsIgnoreCase("true"))
 		            	{
-			            	WriteResultToDB updateResultToDB = new WriteResultToDB();
+			            	DatabaseUtility updateResultToDB = new DatabaseUtility();
 			        		try {
-								updateResultToDB.resultUpdateToDataBase(testMethodName,testResultStatus,
-										String_Array,timeStamp,errorMessage,screenShotPath);
+								updateResultToDB.resultUpdateToDataBase(testMethodName,testResultStatus,String_Array,executionTime,timeStamp,errorMessage,screenShotPath);
 								
 							} catch (Throwable e) {
 								

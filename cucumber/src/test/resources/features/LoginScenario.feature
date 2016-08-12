@@ -9,7 +9,8 @@ Scenario Outline: Verify authorized login
  Then Verify user is login to ITS portal
  And  Dashboard is displayed by default
  And Verify user is able to logout
+ And Update Result to TestRail "<TestCaseId>"
  Examples: 
- |      EmailId                |  Password  |
- | automationBDD@continuum.net |  Abc@12345 | 
+ |      EmailId                |  Password  |TestCaseId|
+ | automationBDD@continuum.net |  Abc@12345 | 123      |
  
